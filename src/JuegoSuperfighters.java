@@ -14,6 +14,7 @@ import java.util.concurrent.Semaphore;
 public class JuegoSuperfighters extends JPanel implements KeyListener, ActionListener {
    
     private boolean gameOver = false;
+    private boolean levelPass = false;
     private Player player;
     private final List<Enemy> enemies = new ArrayList<>();
     private final List<bullet> bullets = new ArrayList<>();
@@ -58,7 +59,7 @@ public class JuegoSuperfighters extends JPanel implements KeyListener, ActionLis
 
         level1.addEnemy(new Enemy(600, 300, player,enemySemaphore));
        // level1.addEnemy(new Enemy(200, 300, player,enemySemaphore));
-        //level1.addEnemy(new Enemy(700, 200, player,enemySemaphore));
+        level1.addEnemy(new Enemy(700, 200, player,enemySemaphore));
         //level1.addEnemy(new Enemy(700, 100, player,enemySemaphore));
 
 
@@ -109,6 +110,7 @@ public class JuegoSuperfighters extends JPanel implements KeyListener, ActionLis
     }
 
     private void loadLevel(int levelIndex) {
+        levelPass = false;
         if (levelIndex >= levels.size()) {
             System.out.println("No more levels! You win!");
             gameOver = true;
@@ -182,7 +184,7 @@ public void actionPerformed(ActionEvent e) {
     }
 
     if (allEnemiesDefeated) {
-        loadLevel(currentLevelIndex + 1); // Cargar el siguiente nivel
+        checkLevel();
     }
 
     repaint();
@@ -194,9 +196,28 @@ public void actionPerformed(ActionEvent e) {
         repaint();
     }
 
+    public void checkLevel(){
+        levelPass = true;
+        gameTimer.stop();
+        repaint();
+
+    }
+
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        if(levelPass){
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 0, getWidth(), getHeight());
+            g.setColor(Color.GREEN);
+            g.setFont(new Font("Arial", Font.BOLD, 50));
+            g.drawString("LEVEL PASSED", getWidth() / 2 - 150, getHeight() / 2);
+            g.setFont(new Font("Arial", Font.PLAIN, 20));
+            g.drawString("Press R to continue", getWidth() / 2 - 100, getHeight() / 2 + 50);
+            return;
+        }
 
         if (gameOver) {
             g.setColor(Color.BLACK);
@@ -257,6 +278,12 @@ public void actionPerformed(ActionEvent e) {
         int key = e.getKeyCode();
         if (gameOver && key == KeyEvent.VK_R) {
             restartGame();
+        }
+
+        if (levelPass && key == KeyEvent.VK_R) {
+            levelPass = false;
+            gameTimer.start();
+            loadLevel(currentLevelIndex + 1);
         }
 
         if (!gameOver) {
