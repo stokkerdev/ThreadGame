@@ -11,7 +11,7 @@ public class Player extends Thread {
     public int velX = 0, velY = 0;
     public final int WIDTH = 30, HEIGHT = 40;
     public boolean jumping = false;
-    public int health = 100;
+    public int health = 1000;
     public final int gravity = 1;
     private int currentGroundY;
     public Gun gun;

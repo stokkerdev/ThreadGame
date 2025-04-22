@@ -97,11 +97,9 @@ public class JuegoSuperfighters extends JPanel implements KeyListener, ActionLis
 
         level3.addEnemy(new Enemy(600, 300, player,finalSemaphore));
         level3.addEnemy(new Enemy(200, 300, player,finalSemaphore));
-        level3.addEnemy(new Enemy(700, 200, player,finalSemaphore));
         level3.addEnemy(new Enemy(700, 100, player,finalSemaphore));
         level3.addEnemy(new Enemy(700, 300, player,finalSemaphore));
         level3.addEnemy(new Enemy(700, 200, player,finalSemaphore));
-        level3.addEnemy(new Enemy(700, 100, player,finalSemaphore));
         level3.addEnemy(new Enemy(700, 50, player,finalSemaphore));
         level3.addEnemy(new Enemy(700, 50, player,finalSemaphore));
         level3.addEnemy(new Enemy(700, 50, player,finalSemaphore));
