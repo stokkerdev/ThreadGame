@@ -9,12 +9,12 @@ import java.util.concurrent.Semaphore;
 
 public class Enemy extends Thread {
 
-    public boolean lookingRight = true;
-    public boolean active = false; // Bandera para controlar si el enemigo está activo
-    public int x, y;
-    public final int WIDTH = 30, HEIGHT = 40;
-    public int health = 100;
-    public boolean alive = true;
+    public boolean lookingRight = true; // Badnera para controlar la dirección del enemigo
+    //public boolean active = false; // Bandera para controlar si el enemigo está activo
+    public int x, y; // Posición del enemigo
+    public final int WIDTH = 30, HEIGHT = 40; // Dimensiones del enemigo, 
+    public int health = 100; // Salud del enemigo, se puede modificar a 20 para que mueran con una sola bala 
+    public boolean alive = false; 
 
 
     private Player target;
@@ -38,7 +38,7 @@ public class Enemy extends Thread {
         try {
             // Adquirir un permiso del semáforo antes de activarse
             enemySemaphore.acquire();
-            active = true; // Activar al enemigo después de adquirir el semáforo
+            alive = true; // Activar al enemigo después de adquirir el semáforo
             System.out.println("Enemy activated: " + this);
 
             while (alive && target.alive) {
@@ -111,7 +111,7 @@ public class Enemy extends Thread {
 
 
     public void draw(Graphics g) {
-        if (!active || !alive) return; // No dibujar si el enemigo no está activo o está muerto
+        if (!alive) return; // No dibujar si el enemigo no está activo o está muerto
 
         Graphics2D g2d = (Graphics2D) g;
 
